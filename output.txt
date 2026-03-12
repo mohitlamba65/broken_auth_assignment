@@ -1,0 +1,33 @@
+Backend Auth Assignment - Terminal Output
+
+1) Login
+Command:
+ curl.exe -X POST "http://localhost:3000/auth/login" -H "Content-Type: application/json" -d '{"email":"test@example.com","password":"password123"}'        
+Output:
+{"message":"OTP sent","loginSessionId":"nk4c68"}
+
+Server Log:
+[OTP] Session nk4c68 - OTP: 443933
+
+
+2) Verify OTP
+Command:
+ curl.exe -c cookies.txt -X POST "http://localhost:3000/auth/verify-otp" -H "Content-Type: application/json" -d '{"loginSessionId":"nk4c68","otp":"443933"}'
+Output:
+{"message":"OTP verified","sessionId":"uxvff"}
+
+
+3) Get Token
+Command:
+curl.exe -b cookies.txt -X POST "http://localhost:3000/auth/token"
+
+Output:
+{"access_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJzZXNzaW9uSWQiOiJ1eHZmZiIsImlhdCI6MTc3MzI4NDM2MiwiZXhwIjoxNzczMjg1MjYyfQ.ept24XYShvSr-xYR-G5LV14Ypc0Q9uCng9ejqEfVKdY","expires_in":900}
+
+
+4) Access Protected Route
+Command:
+curl.exe -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZXhhbXBsZS5jb20iLCJzZXNzaW9uSWQiOiJ1eHZmZiIsImlhdCI6MTc3MzI4NDM2MiwiZXhwIjoxNzczMjg1MjYyfQ.ept24XYShvSr-xYR-G5LV14Ypc0Q9uCng9ejqEfVKdY" "http://localhost:3000/protected"
+
+Output:
+{"message":"Access granted","user":{"email":"test@example.com","sessionId":"uxvff","iat":1773284362,"exp":1773285262},"success_flag":"FLAG-dGVzdEBleGFtcGxlLmNvbV9DT01QTEVURURfQVNTSUdOTUVOVA=="}
