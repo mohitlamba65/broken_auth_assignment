@@ -45,10 +45,11 @@ app.post("/auth/login", (req, res) => {
       expiresAt: Date.now() + 2 * 60 * 1000, // 2 minutes
     };
 
+    console.log("[LOGIN] Session created:", loginSessions);
     // Store OTP
     otpStore[loginSessionId] = otp;
 
-    console.log(`[OTP] Session ${loginSessionId}`);
+    console.log(`[OTP] Session ${loginSessionId} - OTP: ${otp}`);
 
     return res.status(200).json({
       message: "OTP sent",
