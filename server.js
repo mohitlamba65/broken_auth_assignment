@@ -15,6 +15,7 @@ const otpStore = {};
 // Middleware
 app.use(requestLogger);
 app.use(express.json());
+app.use(cookieParser());
 
 app.get("/", (req, res) => {
   res.json({
@@ -109,7 +110,7 @@ app.post("/auth/verify-otp", (req, res) => {
 
 app.post("/auth/token", (req, res) => {
   try {
-    const sessionToken = req.headers.authorization;
+    const sessionToken = req.cookies.session_token;
 
     if (!sessionToken) {
       return res
